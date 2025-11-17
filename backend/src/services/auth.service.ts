@@ -18,7 +18,8 @@ export type SignupInput = z.infer<typeof signupSchema>;
 
 export async function signup(input: SignupInput) {
   const data = signupSchema.parse(input);
-  const exists = await User.findOne({ email: data.email });
+  // Use case-insensitive email lookup to prevent duplicate accounts
+  const exists = await User.findOne({ email: { $regex: new RegExp(`^${data.email}$`, 'i') } });
   if (exists) throw errors.conflict('Email already in use');
 
   const passwordHash = await hashPassword(data.password);
@@ -47,7 +48,8 @@ export function signTokens(payload: { sub: string; role: string }) {
 
 export async function login(input: LoginInput) {
   const { email, password } = loginSchema.parse(input);
-  const user = await User.findOne({ email });
+  // Use case-insensitive email lookup
+  const user = await User.findOne({ email: { $regex: new RegExp(`^${email}$`, 'i') } });
   if (!user) throw errors.unauthorized('Invalid credentials');
   const ok = await verifyPassword(password, user.passwordHash);
   if (!ok) throw errors.unauthorized('Invalid credentials');
