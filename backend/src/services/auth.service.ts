@@ -58,5 +58,11 @@ export async function login(input: LoginInput) {
 }
 
 export function sanitize(user: any) {
-  return { id: user.id, email: user.email, name: user.name, role: user.role };
+  return { 
+    id: user.id, 
+    email: user.email, 
+    name: user.name, 
+    role: user.role,
+    driverBusId: user.driverBusId 
+  };
 }

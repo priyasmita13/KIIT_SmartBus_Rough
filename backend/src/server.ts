@@ -9,7 +9,9 @@ async function start() {
     logger.info('Connected to MongoDB');
 
     app.listen(config.port, () => {
-      logger.info({ port: config.port }, 'API server listening');
+      console.log(`API server listening
+    port: ${config.port}
+    time: ${new Date().toISOString()}`);
     });
   } catch (err) {
     logger.error({ err }, 'Failed to start server');
@@ -18,6 +20,3 @@ async function start() {
 }
 
 start();
-
-
-

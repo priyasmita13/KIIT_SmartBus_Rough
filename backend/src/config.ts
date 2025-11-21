@@ -43,6 +43,12 @@ export const config: AppConfig = {
   emailPassword: process.env.EMAIL_PASSWORD,
 };
 
+console.log('[Config] Loaded:', { 
+  mongoUri: config.mongoUri, 
+  jwtAccessTtl: config.jwtAccessTtl,
+  isProd: config.isProd 
+});
+
 export default config;
 
 

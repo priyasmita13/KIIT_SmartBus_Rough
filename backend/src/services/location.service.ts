@@ -1,5 +1,6 @@
 import User from '../models/user.model';
 import type { UserDocument } from '../models/user.model';
+import Bus from '../models/bus.model';
 
 export interface LocationUpdate {
   latitude: number;
@@ -9,20 +10,71 @@ export interface LocationUpdate {
 
 export class LocationService {
   // Update user location
-  static async updateLocation(userId: string, latitude: number, longitude: number): Promise<UserDocument | null> {
+  static async updateLocation(
+    userId: string, 
+    latitude: number, 
+    longitude: number,
+    routeFrom?: string,
+    routeTo?: string,
+    seatStatus?: string
+  ): Promise<UserDocument | null> {
     try {
+      const updateData: any = {
+        location: {
+          latitude,
+          longitude,
+          lastUpdated: new Date()
+        },
+        isOnline: true
+      };
+
+      // Add route and seat info if provided (for drivers)
+      if (routeFrom !== undefined || routeTo !== undefined) {
+        updateData.routeInfo = {
+          from: routeFrom || '',
+          to: routeTo || ''
+        };
+      }
+      if (seatStatus !== undefined) {
+        updateData.seatStatus = seatStatus;
+      }
+
+      console.log('[LocationService] Updating with data:', {
+        userId,
+        routeFrom,
+        routeTo,
+        seatStatus,
+        updateData
+      });
+
       const user = await User.findByIdAndUpdate(
         userId,
-        {
-          location: {
-            latitude,
-            longitude,
-            lastUpdated: new Date()
-          },
-          isOnline: true
-        },
+        updateData,
         { new: true }
       );
+
+      console.log('[LocationService] Updated user:', {
+        id: user?.id,
+        routeInfo: user?.routeInfo,
+        seatStatus: user?.seatStatus
+      });
+
+      // If user is a driver and has a bus assigned, update the bus location too
+      if (user && user.role === 'DRIVER' && user.driverBusId) {
+        await Bus.findOneAndUpdate(
+          { busId: user.driverBusId },
+          {
+            currentLocation: {
+              latitude,
+              longitude
+            },
+            lastUpdated: new Date(),
+            status: 'IN_SERVICE',
+            isActive: true
+          }
+        );
+      }
+
       return user;
     } catch (error) {
       console.error('Error updating location:', error);
@@ -37,8 +89,16 @@ export class LocationService {
         role: 'DRIVER',
         isOnline: true,
         location: { $exists: true }
-      }).select('name driverBusId location lastUpdated');
+      }).select('name driverBusId location lastUpdated routeInfo seatStatus');
       
+      console.log('[LocationService] Fetched drivers:', drivers.map(d => ({
+        id: d.id,
+        name: d.name,
+        busId: d.driverBusId,
+        routeInfo: d.routeInfo,
+        seatStatus: d.seatStatus
+      })));
+
       return drivers;
     } catch (error) {
       console.error('Error fetching online drivers:', error);

@@ -6,7 +6,7 @@ export class LocationController {
   // Update user's location
   static async updateLocation(req: express.Request, res: express.Response) {
     try {
-      const { latitude, longitude } = req.body;
+      const { latitude, longitude, routeFrom, routeTo, seatStatus } = req.body;
       const userId = (req as any).user?.id;
 
       if (!userId) {
@@ -17,7 +17,14 @@ export class LocationController {
         return res.status(400).json({ error: 'Latitude and longitude are required' });
       }
 
-      const updatedUser = await LocationService.updateLocation(userId, latitude, longitude);
+      const updatedUser = await LocationService.updateLocation(
+        userId, 
+        latitude, 
+        longitude,
+        routeFrom,
+        routeTo,
+        seatStatus
+      );
       
       if (!updatedUser) {
         return res.status(404).json({ error: 'User not found' });
@@ -80,12 +87,13 @@ export class LocationController {
         return res.status(401).json({ error: 'Unauthorized' });
       }
 
-      // Only admin and drivers can see all drivers
-      if (user.role !== 'ADMIN' && user.role !== 'DRIVER') {
-        return res.status(403).json({ error: 'Access denied' });
-      }
+      // Allow all authenticated users to see online drivers (buses)
+      // if (user.role !== 'ADMIN' && user.role !== 'DRIVER') {
+      //   return res.status(403).json({ error: 'Access denied' });
+      // }
 
       const drivers = await LocationService.getOnlineDrivers();
+      console.log(`[API] getOnlineDrivers found ${drivers.length} drivers`);
 
       res.json({
         success: true,
@@ -94,7 +102,9 @@ export class LocationController {
           name: driver.name,
           busId: driver.driverBusId,
           location: driver.location,
-          lastUpdated: driver.location?.lastUpdated
+          lastUpdated: driver.location?.lastUpdated,
+          routeInfo: driver.routeInfo,
+          seatStatus: driver.seatStatus
         }))
       });
     } catch (error) {

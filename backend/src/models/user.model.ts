@@ -14,6 +14,11 @@ export interface UserDocument extends Document {
     lastUpdated: Date;
   };
   isOnline?: boolean;
+  routeInfo?: {
+    from: string;
+    to: string;
+  };
+  seatStatus?: string;
 }
 
 const userSchema = new Schema<UserDocument>(
@@ -28,7 +33,12 @@ const userSchema = new Schema<UserDocument>(
       longitude: { type: Number },
       lastUpdated: { type: Date, default: Date.now }
     },
-    isOnline: { type: Boolean, default: false }
+    isOnline: { type: Boolean, default: false },
+    routeInfo: {
+      from: { type: String },
+      to: { type: String }
+    },
+    seatStatus: { type: String }
   },
   { timestamps: true }
 );

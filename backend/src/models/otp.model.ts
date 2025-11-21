@@ -19,7 +19,7 @@ const otpSchema = new Schema<OtpDocument>(
 );
 
 // Create TTL index for automatic cleanup
-otpSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
+
 
 export const Otp: Model<OtpDocument> = mongoose.models.Otp || mongoose.model<OtpDocument>('Otp', otpSchema);
 

@@ -26,7 +26,7 @@ app.use(
     origin: (origin, cb) => {
       if (!origin) return cb(null, true);
       const explicitlyAllowed = config.corsOrigins.includes(origin);
-      const devLocalhostAllowed = !config.isProd && /^https?:\/\/(localhost|127\.0\.0\.1)(:\\d+)?$/.test(origin);
+      const devLocalhostAllowed = !config.isProd && /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
       const allowed = explicitlyAllowed || devLocalhostAllowed;
       cb(allowed ? null : new Error('CORS blocked'), allowed);
     },
