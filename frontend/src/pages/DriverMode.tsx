@@ -43,7 +43,7 @@ const DriverMode: React.FC = () => {
 
   // ── SOCKET CONNECTION ────────────────────────────────────────────────────────
   const connectSocket = useCallback(() => {
-    const token = sessionStorage.getItem('accessToken');
+    const token = localStorage.getItem('accessToken');
     if (!token) {
       setError('No auth token — please log in again');
       return;
