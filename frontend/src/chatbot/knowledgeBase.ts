@@ -143,7 +143,7 @@ const knowledge: KnowledgeEntry[] = [
   {
     keywords: ['main circuit', 'full loop', 'campus 1 to campus 25'],
     question: 'Tell me about the Main Circuit route.',
-    answer: '**Main Circuit (R001)**\nPath: Campus 1 → Library Junction → Campus 6 → Sports Complex → Campus 15 → Medical Center → Campus 25 → Campus 1\nFrequency: Every **10 minutes** | Duration: **45 minutes** | Buses: B01, B03, B05',
+    answer: '**Main Circuit (R001)**\nPath: Campus 1 → Central Library → Campus 6 → Sports Complex → Campus 15 → KIMS → Campus 25 → Campus 1\nFrequency: Every **10 minutes** | Duration: **45 minutes** | Buses: B01, B03, B05',
     category: 'routes',
     navigateTo: '/route-schedule',
   },
@@ -184,7 +184,7 @@ const knowledge: KnowledgeEntry[] = [
   {
     keywords: ['stops', 'bus stops', 'locations', 'pickup'],
     question: 'What are the bus stop locations?',
-    answer: 'Major stops include:\n• Campus 1 (Main Campus)\n• Campus 6 (Engineering)\n• Campus 15 (Medical)\n• Campus 25 (Law & Management)\n• Main Gate\n• Library Junction\n• Sports Complex\n• Hostels Area\n• Medical Center\n• Academic Block A & B\n• Food Court\n• Admin Building',
+    answer: 'Major stops include:\n• Campus 1 (Main Campus)\n• Campus 6 (Engineering)\n• Campus 15 (Medical)\n• Campus 25 (Law & Management)\n• Main Gate\n• Central Library\n• Sports Complex\n• Hostels Area\n• KIMS\n• Academic Block A & B\n• Food Court\n• Admin Building',
     category: 'general',
   },
   {

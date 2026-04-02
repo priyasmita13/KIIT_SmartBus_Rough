@@ -4,8 +4,8 @@ import { ArrowLeft, Bus, MapPin, Clock, Users, RefreshCw } from 'lucide-react';
 
 // Bus data (same source of truth as SeatAvailability)
 const ALL_BUSES = [
-  { id: 'B01', route: 'Campus 1 → Campus 6',   availableSeats: 15, totalSeats: 45, status: 'Available',   nextStop: 'Library Junction', eta: '3 min',  lastUpdated: '30s ago' },
-  { id: 'B02', route: 'Campus 6 → Campus 15',  availableSeats: 8,  totalSeats: 45, status: 'Few Seats',  nextStop: 'Medical Center',   eta: '1 min',  lastUpdated: '15s ago' },
+  { id: 'B01', route: 'Campus 1 → Campus 6',   availableSeats: 15, totalSeats: 45, status: 'Available',   nextStop: 'Central Library', eta: '3 min',  lastUpdated: '30s ago' },
+  { id: 'B02', route: 'Campus 6 → Campus 15',  availableSeats: 8,  totalSeats: 45, status: 'Few Seats',  nextStop: 'KIMS',            eta: '1 min',  lastUpdated: '15s ago' },
   { id: 'B03', route: 'Campus 15 → Campus 25', availableSeats: 22, totalSeats: 45, status: 'Available',   nextStop: 'Sports Complex',   eta: '7 min',  lastUpdated: '45s ago' },
   { id: 'B04', route: 'Campus 25 → Campus 1',  availableSeats: 5,  totalSeats: 45, status: 'Nearly Full', nextStop: 'Main Gate',         eta: '12 min', lastUpdated: '20s ago' },
   { id: 'B05', route: 'Campus 1 → Campus 15',  availableSeats: 0,  totalSeats: 45, status: 'Full',        nextStop: 'Academic Block A',  eta: '2 min',  lastUpdated: '10s ago' },

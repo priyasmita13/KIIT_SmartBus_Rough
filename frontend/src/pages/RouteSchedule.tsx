@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { Clock, Navigation, Locate, MapPin, ChevronDown, ChevronUp } from 'lucide-react';
 
 const campusLocations = [
-  'Campus 1 (Main Campus)', 'Campus 6 (Engineering)', 'Campus 15 (Medical)',
-  'Campus 25 (Law & Management)', 'Main Gate', 'Library Junction',
-  'Sports Complex', 'Hostels Area', 'Medical Center',
+  'Campus 1', 'Campus 6', 'Campus 15',
+  'Campus 25', 'Main Gate', 'Central Library',
+  'Sports Complex', 'Hostels Area', 'KIMS',
   'Academic Block A', 'Academic Block B', 'Food Court', 'Admin Building',
 ];
 
@@ -15,14 +15,14 @@ const routes = [
     frequency: '10 min', duration: '45 min', buses: ['B01', 'B03', 'B05'],
     accent: 'from-indigo-500 to-violet-500',
     stops: [
-      { name: 'Campus 1 (Main Campus)',       time: '08:00' },
-      { name: 'Library Junction',              time: '08:05' },
-      { name: 'Campus 6 (Engineering)',        time: '08:12' },
-      { name: 'Sports Complex',                time: '08:18' },
-      { name: 'Campus 15 (Medical)',           time: '08:25' },
-      { name: 'Medical Center',                time: '08:30' },
-      { name: 'Campus 25 (Law & Management)', time: '08:38' },
-      { name: 'Campus 1 (Main Campus)',        time: '08:45' },
+      { name: 'Campus 1',         time: '08:00' },
+      { name: 'Central Library', time: '08:05' },
+      { name: 'Campus 6',         time: '08:12' },
+      { name: 'Sports Complex',   time: '08:18' },
+      { name: 'Campus 15',        time: '08:25' },
+      { name: 'KIMS',           time: '08:30' },
+      { name: 'Campus 25',        time: '08:38' },
+      { name: 'Campus 1',         time: '08:45' },
     ],
   },
   {
@@ -31,10 +31,10 @@ const routes = [
     frequency: '15 min', duration: '25 min', buses: ['B02', 'B04'],
     accent: 'from-cyan-500 to-indigo-500',
     stops: [
-      { name: 'Campus 1 (Main Campus)', time: '08:00' },
-      { name: 'Academic Block A',        time: '08:08' },
-      { name: 'Campus 15 (Medical)',     time: '08:15' },
-      { name: 'Campus 1 (Main Campus)', time: '08:25' },
+      { name: 'Campus 1',         time: '08:00' },
+      { name: 'Academic Block A', time: '08:08' },
+      { name: 'Campus 15',        time: '08:15' },
+      { name: 'Campus 1',         time: '08:25' },
     ],
   },
   {
@@ -45,7 +45,7 @@ const routes = [
     stops: [
       { name: 'Hostels Area',            time: '07:30' },
       { name: 'Food Court',              time: '07:35' },
-      { name: 'Campus 6 (Engineering)', time: '07:42' },
+      { name: 'Campus 6',      time: '07:42' },
       { name: 'Hostels Area',            time: '07:50' },
     ],
   },
@@ -61,7 +61,7 @@ const RouteSchedule = () => {
     setIsLocating(true);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        () => { setTimeout(() => { setSource('Campus 1 (Main Campus)'); setIsLocating(false); }, 1000); },
+        () => { setTimeout(() => { setSource('Campus 1'); setIsLocating(false); }, 1000); },
         () => setIsLocating(false),
       );
     } else { setIsLocating(false); }
