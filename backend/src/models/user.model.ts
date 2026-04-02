@@ -13,12 +13,11 @@ export interface UserDocument extends Document {
     longitude: number;
     lastUpdated: Date;
   };
+  currentDestination?: string;
   isOnline?: boolean;
-  routeInfo?: {
-    from: string;
-    to: string;
-  };
-  seatStatus?: string;
+  isEmailVerified?: boolean;
+  emailVerificationOTP?: string;
+  emailVerificationOTPExpires?: Date;
 }
 
 const userSchema = new Schema<UserDocument>(
@@ -33,12 +32,11 @@ const userSchema = new Schema<UserDocument>(
       longitude: { type: Number },
       lastUpdated: { type: Date, default: Date.now }
     },
+    currentDestination: { type: String, default: '' },
     isOnline: { type: Boolean, default: false },
-    routeInfo: {
-      from: { type: String },
-      to: { type: String }
-    },
-    seatStatus: { type: String }
+    isEmailVerified: { type: Boolean },
+    emailVerificationOTP: { type: String, select: false },
+    emailVerificationOTPExpires: { type: Date, select: false },
   },
   { timestamps: true }
 );

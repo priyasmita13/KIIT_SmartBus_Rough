@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Bus, AlertTriangle, MessageSquare, RefreshCw, MapPin, Users, Clock, CheckCircle, XCircle } from 'lucide-react';
 
-const API = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000';
+import { API_BASE as API } from '../lib/apiBase';
+
 
 interface BusData {
   _id: string;
@@ -39,7 +40,7 @@ interface Complaint {
 const dummyBuses: BusData[] = [
   {
     _id: 'dummy-1',
-    busId: 'KB001',
+    busId: 'B01',
     currentLocation: { latitude: 20.355, longitude: 85.819 },
     destination: 'Campus 6',
     seatAvailability: 'EMPTY',
@@ -52,7 +53,7 @@ const dummyBuses: BusData[] = [
   },
   {
     _id: 'dummy-2',
-    busId: 'KB002',
+    busId: 'B02',
     currentLocation: { latitude: 20.360, longitude: 85.825 },
     destination: 'Campus 15',
     seatAvailability: 'FEW_SEATS',
@@ -65,7 +66,7 @@ const dummyBuses: BusData[] = [
   },
   {
     _id: 'dummy-3',
-    busId: 'KB003',
+    busId: 'B03',
     currentLocation: { latitude: 20.350, longitude: 85.815 },
     destination: 'Campus 25',
     seatAvailability: 'EMPTY',
@@ -78,7 +79,7 @@ const dummyBuses: BusData[] = [
   },
   {
     _id: 'dummy-4',
-    busId: 'KB004',
+    busId: 'B04',
     currentLocation: { latitude: 20.365, longitude: 85.830 },
     destination: 'Campus 1',
     seatAvailability: 'FULL',
@@ -91,7 +92,7 @@ const dummyBuses: BusData[] = [
   },
   {
     _id: 'dummy-5',
-    busId: 'KB005',
+    busId: 'B05',
     currentLocation: { latitude: 20.340, longitude: 85.810 },
     destination: 'Campus 15',
     seatAvailability: 'FULL',
@@ -104,7 +105,7 @@ const dummyBuses: BusData[] = [
   },
   {
     _id: 'dummy-6',
-    busId: 'KB006',
+    busId: 'B06',
     currentLocation: { latitude: 20.370, longitude: 85.835 },
     destination: 'Campus 6',
     seatAvailability: 'EMPTY',
@@ -126,7 +127,7 @@ const placeholderComplaints: Complaint[] = [
     userEmail: '2206249@kiit.ac.in',
     category: 'Technical Issue',
     subject: 'Bus tracking not updating',
-    message: 'The bus KB001 location is not updating in real-time. Last update was 10 minutes ago. Please fix this issue.',
+    message: 'The bus B01 location is not updating in real-time. Last update was 10 minutes ago. Please fix this issue.',
     status: 'PENDING',
     createdAt: new Date(Date.now() - 3600000).toISOString(),
     priority: 'MEDIUM'
@@ -138,7 +139,7 @@ const placeholderComplaints: Complaint[] = [
     userEmail: '2406090@kiit.ac.in',
     category: 'Complaint',
     subject: 'Bus driver behavior',
-    message: 'The driver of bus KB002 was driving very recklessly today. Almost caused an accident near the library junction. This needs immediate attention.',
+    message: 'The driver of bus B02 was driving very recklessly today. Almost caused an accident near the library junction. This needs immediate attention.',
     status: 'IN_PROGRESS',
     createdAt: new Date(Date.now() - 1800000).toISOString(),
     priority: 'HIGH'
@@ -162,7 +163,7 @@ const placeholderComplaints: Complaint[] = [
     userEmail: '2305123@kiit.ac.in',
     category: 'Complaint',
     subject: 'Overcrowded bus',
-    message: 'Bus KB004 is always overcrowded during morning hours. Students are standing in the aisle which is unsafe. Please add more buses on this route.',
+    message: 'Bus B04 is always overcrowded during morning hours. Students are standing in the aisle which is unsafe. Please add more buses on this route.',
     status: 'PENDING',
     createdAt: new Date(Date.now() - 5400000).toISOString(),
     priority: 'MEDIUM'
