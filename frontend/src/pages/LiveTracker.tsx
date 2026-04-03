@@ -554,9 +554,6 @@ const LiveTracker: React.FC = () => {
                         <div>
                           <p className="text-sm font-semibold text-gray-800">🚌 {bus.name}</p>
                           <p className="text-xs text-yellow-700 mt-0.5">→ {bus.destination}</p>
-                          {bus.speed !== undefined && bus.speed > 0 && (
-                            <p className="text-xs text-gray-400 mt-0.5">{bus.speed} km/h</p>
-                          )}
                           {bus.busId && (
                             <p className="text-xs text-gray-400 mt-1 font-mono tracking-tight" style={{ color: '#9CA3AF' }}>ID: {bus.busId}</p>
                           )}
