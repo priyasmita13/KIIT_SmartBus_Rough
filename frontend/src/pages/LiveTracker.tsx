@@ -77,9 +77,6 @@ const BusMarker: React.FC<{ bus: BusState; icon: Icon }> = ({ bus, icon }) => {
         <div style={{ minWidth: '180px' }}>
           <p className="font-semibold text-yellow-600 mb-1">🚌 {bus.name}</p>
           <p className="text-sm text-gray-700">📍 Heading to: <strong>{bus.destination}</strong></p>
-          {bus.speed !== undefined && (
-            <p className="text-xs text-gray-500">Speed: {bus.speed} km/h</p>
-          )}
           {bus.distanceKm !== undefined && (
             <p className="text-xs text-gray-500">
               Distance: {bus.distanceKm < 1 ? `${Math.round(bus.distanceKm * 1000)}m` : `${bus.distanceKm.toFixed(1)}km`} away
