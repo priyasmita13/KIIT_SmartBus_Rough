@@ -77,7 +77,6 @@ const BusMarker: React.FC<{ bus: BusState; icon: Icon }> = ({ bus, icon }) => {
         <div style={{ minWidth: '180px' }}>
           <p className="font-semibold text-yellow-600 mb-1">🚌 {bus.name}</p>
           <p className="text-sm text-gray-700">📍 Heading to: <strong>{bus.destination}</strong></p>
-          {bus.busId && <p className="text-xs text-gray-500 mt-1">Bus ID: {bus.busId}</p>}
           {bus.speed !== undefined && (
             <p className="text-xs text-gray-500">Speed: {bus.speed} km/h</p>
           )}
@@ -146,21 +145,46 @@ const LiveTracker: React.FC = () => {
     iconUrl:
       'data:image/svg+xml;charset=utf-8,' +
       encodeURIComponent(`
-        <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-          <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.3"/></filter>
-          <g filter="url(#s)">
-            <rect x="4" y="6" width="32" height="22" rx="5" fill="#F59E0B" stroke="white" stroke-width="2"/>
-            <rect x="7" y="10" width="9" height="7" rx="1.5" fill="white" fill-opacity="0.85"/>
-            <rect x="18" y="10" width="9" height="7" rx="1.5" fill="white" fill-opacity="0.85"/>
-            <rect x="4" y="22" width="32" height="5" rx="1" fill="#D97706"/>
-            <circle cx="11" cy="33" r="3.5" fill="#1F2937" stroke="white" stroke-width="2"/>
-            <circle cx="29" cy="33" r="3.5" fill="#1F2937" stroke="white" stroke-width="2"/>
+        <svg width="48" height="56" viewBox="0 0 48 56" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="shadow" x="-20%" y="-10%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#00000055"/>
+            </filter>
+            <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#FBBF24"/>
+              <stop offset="100%" stop-color="#D97706"/>
+            </linearGradient>
+            <linearGradient id="roofGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#FCD34D"/>
+              <stop offset="100%" stop-color="#F59E0B"/>
+            </linearGradient>
+          </defs>
+          <g filter="url(#shadow)">
+            <!-- Pin tail -->
+            <path d="M24 52 L18 38 Q24 42 30 38 Z" fill="#B45309"/>
+            <!-- Bus body -->
+            <rect x="4" y="4" width="40" height="34" rx="7" fill="url(#bodyGrad)" stroke="#92400E" stroke-width="1"/>
+            <!-- Roof stripe -->
+            <rect x="4" y="4" width="40" height="9" rx="7" fill="url(#roofGrad)"/>
+            <rect x="4" y="9" width="40" height="4" fill="url(#roofGrad)"/>
+            <!-- Front windshield -->
+            <rect x="8" y="14" width="32" height="9" rx="3" fill="#BFDBFE" fill-opacity="0.9" stroke="white" stroke-width="0.8"/>
+            <!-- Window shine -->
+            <rect x="9" y="15" width="14" height="3" rx="1.5" fill="white" fill-opacity="0.5"/>
+            <rect x="25" y="15" width="14" height="3" rx="1.5" fill="white" fill-opacity="0.5"/>
+            <!-- Lower body detail -->
+            <rect x="4" y="30" width="40" height="6" rx="3" fill="#92400E" fill-opacity="0.35"/>
+            <!-- Headlights -->
+            <circle cx="11" cy="26" r="2.5" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1"/>
+            <circle cx="37" cy="26" r="2.5" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1"/>
+            <!-- Door line -->
+            <rect x="19" y="21" width="10" height="13" rx="1.5" fill="#B45309" fill-opacity="0.25" stroke="#92400E" stroke-width="0.5"/>
           </g>
         </svg>
       `),
-    iconSize: [40, 40],
-    iconAnchor: [20, 36],
-    popupAnchor: [0, -36],
+    iconSize: [48, 56],
+    iconAnchor: [24, 52],
+    popupAnchor: [0, -52],
   });
 
   const userIcon = new Icon({
@@ -555,6 +579,9 @@ const LiveTracker: React.FC = () => {
                           <p className="text-xs text-yellow-700 mt-0.5">→ {bus.destination}</p>
                           {bus.speed !== undefined && bus.speed > 0 && (
                             <p className="text-xs text-gray-400 mt-0.5">{bus.speed} km/h</p>
+                          )}
+                          {bus.busId && (
+                            <p className="text-xs text-gray-400 mt-1 font-mono tracking-tight" style={{ color: '#9CA3AF' }}>ID: {bus.busId}</p>
                           )}
                         </div>
                         {bus.distanceKm !== undefined && (
