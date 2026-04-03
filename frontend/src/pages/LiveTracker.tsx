@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { MapPin, Navigation, RefreshCw, Bus, Crosshair, Radio } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, Popup, Circle, useMap } from 'react-leaflet';
-import L from 'leaflet';
+import L, { Icon } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { io, type Socket } from 'socket.io-client';
 
@@ -56,7 +56,7 @@ const RecenterMap: React.FC<{ lat: number; lng: number; shouldRecenter: boolean;
  * we use a ref to hold the Leaflet marker instance and call setLatLng()
  * directly — Leaflet animates the move smoothly with CSS transitions.
  */
-const BusMarker: React.FC<{ bus: BusState; icon: Icon }> = ({ bus, icon }) => {
+const BusMarker: React.FC<{ bus: BusState; icon: L.Icon | L.DivIcon }> = ({ bus, icon }) => {
   const markerRef = useRef<L.Marker | null>(null);
 
   // On subsequent position updates, move the marker without re-mounting
