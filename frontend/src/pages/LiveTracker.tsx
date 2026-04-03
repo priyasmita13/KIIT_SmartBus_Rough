@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { MapPin, Navigation, RefreshCw, Bus, Crosshair, Radio } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, Popup, Circle, useMap } from 'react-leaflet';
-import { Icon } from 'leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { io, type Socket } from 'socket.io-client';
@@ -138,50 +137,31 @@ const LiveTracker: React.FC = () => {
   const GOOD_ACCURACY = 50;
 
   // ── Custom icons ─────────────────────────────────────────────────────────────
-  const busIcon = new Icon({
-    iconUrl:
-      'data:image/svg+xml;charset=utf-8,' +
-      encodeURIComponent(`
-        <svg width="48" height="56" viewBox="0 0 48 56" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <filter id="shadow" x="-20%" y="-10%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#00000055"/>
-            </filter>
-            <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#FBBF24"/>
-              <stop offset="100%" stop-color="#D97706"/>
-            </linearGradient>
-            <linearGradient id="roofGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#FCD34D"/>
-              <stop offset="100%" stop-color="#F59E0B"/>
-            </linearGradient>
-          </defs>
-          <g filter="url(#shadow)">
-            <!-- Pin tail -->
-            <path d="M24 52 L18 38 Q24 42 30 38 Z" fill="#B45309"/>
-            <!-- Bus body -->
-            <rect x="4" y="4" width="40" height="34" rx="7" fill="url(#bodyGrad)" stroke="#92400E" stroke-width="1"/>
-            <!-- Roof stripe -->
-            <rect x="4" y="4" width="40" height="9" rx="7" fill="url(#roofGrad)"/>
-            <rect x="4" y="9" width="40" height="4" fill="url(#roofGrad)"/>
-            <!-- Front windshield -->
-            <rect x="8" y="14" width="32" height="9" rx="3" fill="#BFDBFE" fill-opacity="0.9" stroke="white" stroke-width="0.8"/>
-            <!-- Window shine -->
-            <rect x="9" y="15" width="14" height="3" rx="1.5" fill="white" fill-opacity="0.5"/>
-            <rect x="25" y="15" width="14" height="3" rx="1.5" fill="white" fill-opacity="0.5"/>
-            <!-- Lower body detail -->
-            <rect x="4" y="30" width="40" height="6" rx="3" fill="#92400E" fill-opacity="0.35"/>
-            <!-- Headlights -->
-            <circle cx="11" cy="26" r="2.5" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1"/>
-            <circle cx="37" cy="26" r="2.5" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1"/>
-            <!-- Door line -->
-            <rect x="19" y="21" width="10" height="13" rx="1.5" fill="#B45309" fill-opacity="0.25" stroke="#92400E" stroke-width="0.5"/>
-          </g>
-        </svg>
-      `),
-    iconSize: [48, 56],
-    iconAnchor: [24, 52],
-    popupAnchor: [0, -52],
+  // Uses the official Google Material Symbols 'directions_bus' icon
+  const busIcon = L.divIcon({
+    html: `
+      <div style="
+        display:flex;align-items:center;justify-content:center;
+        width:44px;height:44px;
+        background:linear-gradient(145deg,#FBBF24,#D97706);
+        border-radius:50% 50% 50% 0;
+        transform:rotate(-45deg);
+        box-shadow:0 4px 14px rgba(0,0,0,0.45);
+        border:2.5px solid #fff;
+      ">
+        <span class="material-symbols-rounded" style="
+          font-size:22px;
+          color:#fff;
+          transform:rotate(45deg);
+          font-variation-settings:'FILL' 1,'wght' 600;
+          line-height:1;
+        ">directions_bus</span>
+      </div>
+    `,
+    className: '',
+    iconSize: [44, 44],
+    iconAnchor: [12, 44],
+    popupAnchor: [10, -44],
   });
 
   const userIcon = new Icon({

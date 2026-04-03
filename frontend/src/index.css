@@ -108,13 +108,24 @@
 
   /* Input */
   .input-dark {
-    @apply w-full px-4 py-3 rounded-xl border border-white/10 text-ink-primary
+    @apply w-full px-4 py-3 rounded-xl border border-white/10 text-white
            placeholder:text-slate-500 focus:outline-none focus:border-indigo-500/60
            transition-all duration-150;
     background-color: rgba(255, 255, 255, 0.06);
+    color-scheme: dark;
   }
   .input-dark:focus {
     background-color: rgba(255, 255, 255, 0.08);
+  }
+  /* Force native select options to be dark-themed & readable */
+  .input-dark option {
+    background-color: #1E1E32;
+    color: #F1F5F9;
+  }
+  .input-dark option:hover,
+  .input-dark option:checked {
+    background-color: #4F46E5;
+    color: #fff;
   }
 
   /* Status badge */
